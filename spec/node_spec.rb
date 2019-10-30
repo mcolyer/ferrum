@@ -31,7 +31,7 @@ module Ferrum
     it "hovers an element before clicking it" do
       browser.goto("/ferrum/with_js")
       browser.at_xpath("//a[span[text() = 'Hidden link']]").click
-      expect(browser.current_url).to eq(base_url("/"))
+      expect(browser.window_url).to eq(base_url("/"))
     end
 
     it "works correctly when JSON is overwritten" do
@@ -68,9 +68,8 @@ module Ferrum
       end
 
       it "scrolls into view" do
-        # FIXME:
         browser.at_xpath("//a[text() = 'Link outside viewport']").click
-        expect(browser.current_url).to eq("/")
+        expect(browser.window_url).to eq("/")
       end
 
       it "scrolls into view if scrollIntoViewIfNeeded fails" do

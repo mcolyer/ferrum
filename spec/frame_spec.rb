@@ -44,13 +44,13 @@ module Ferrum
 
       it "waits for the cross-domain frame to load" do
         browser.goto("/ferrum/frames")
-        expect(browser.current_url).to eq(base_url("/ferrum/frames"))
+        expect(browser.window_url).to eq(base_url("/ferrum/frames"))
         frame = browser.at_xpath("//iframe[@name='frame']").frame
 
         expect(frame.url).to end_with("/ferrum/slow")
         expect(frame.body).to include("slow page")
 
-        expect(browser.current_url).to end_with("/ferrum/frames")
+        expect(browser.window_url).to end_with("/ferrum/frames")
       end
 
       context "with src == about:blank" do
@@ -229,7 +229,7 @@ module Ferrum
 
         frame = browser.at_xpath("//iframe").frame
         expect(frame.url).to end_with("/ferrum/slow")
-        expect(browser.current_url).to end_with("/ferrum/frames")
+        expect(browser.window_url).to end_with("/ferrum/frames")
       end
     end
   end

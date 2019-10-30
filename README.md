@@ -221,22 +221,22 @@ browser.goto("https://github.com/")
 browser.xpath("//a[@aria-label='Issues you created']") # => [Node]
 ```
 
-#### current_url : `String`
+#### window_url : `String`
 
 Returns current top window location href.
 
 ```ruby
 browser.goto("https://google.com/")
-browser.current_url # => "https://www.google.com/"
+browser.window_url # => "https://www.google.com/"
 ```
 
-#### current_title : `String`
+#### window_title : `String`
 
 Returns current top window title
 
 ```ruby
 browser.goto("https://google.com/")
-browser.current_title # => "Google"
+browser.window_title # => "Google"
 ```
 
 #### body : `String`

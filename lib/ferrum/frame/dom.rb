@@ -20,11 +20,11 @@
 module Ferrum
   class Frame
     module DOM
-      def current_url
+      def window_url
         evaluate("window.top.location.href")
       end
 
-      def current_title
+      def window_title
         evaluate("window.top.document.title")
       end
 

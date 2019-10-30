@@ -488,39 +488,39 @@ module Ferrum
 
     it "handles hash changes" do
       browser.goto("/#omg")
-      expect(browser.current_url).to match(%r{/#omg$})
+      expect(browser.window_url).to match(%r{/#omg$})
       browser.execute <<-JS
         window.onhashchange = function() { window.last_hashchange = window.location.hash }
       JS
       browser.goto("/#foo")
-      expect(browser.current_url).to match(%r{/#foo$})
+      expect(browser.window_url).to match(%r{/#foo$})
       expect(browser.evaluate("window.last_hashchange")).to eq("#foo")
     end
 
-    context "current_url" do
+    context "window_url" do
       it "supports whitespace characters" do
         browser.goto("/ferrum/arbitrary_path/200/foo%20bar%20baz")
-        expect(browser.current_url).to eq(base_url("/ferrum/arbitrary_path/200/foo%20bar%20baz"))
+        expect(browser.window_url).to eq(base_url("/ferrum/arbitrary_path/200/foo%20bar%20baz"))
       end
 
       it "supports escaped characters" do
         browser.goto("/ferrum/arbitrary_path/200/foo?a%5Bb%5D=c")
-        expect(browser.current_url).to eq(base_url("/ferrum/arbitrary_path/200/foo?a%5Bb%5D=c"))
+        expect(browser.window_url).to eq(base_url("/ferrum/arbitrary_path/200/foo?a%5Bb%5D=c"))
       end
 
       it "supports url in parameter" do
         browser.goto("/ferrum/arbitrary_path/200/foo%20asd?a=http://example.com/asd%20asd")
-        expect(browser.current_url).to eq(base_url("/ferrum/arbitrary_path/200/foo%20asd?a=http://example.com/asd%20asd"))
+        expect(browser.window_url).to eq(base_url("/ferrum/arbitrary_path/200/foo%20asd?a=http://example.com/asd%20asd"))
       end
 
       it "supports restricted characters ' []:/+&='" do
         browser.goto("/ferrum/arbitrary_path/200/foo?a=%20%5B%5D%3A%2F%2B%26%3D")
-        expect(browser.current_url).to eq(base_url("/ferrum/arbitrary_path/200/foo?a=%20%5B%5D%3A%2F%2B%26%3D"))
+        expect(browser.window_url).to eq(base_url("/ferrum/arbitrary_path/200/foo?a=%20%5B%5D%3A%2F%2B%26%3D"))
       end
 
       it "returns about:blank when on about:blank" do
         browser.goto("about:blank")
-        expect(browser.current_url).to eq("about:blank")
+        expect(browser.window_url).to eq("about:blank")
       end
     end
 
@@ -631,20 +631,20 @@ module Ferrum
     it "can go back when history state has been pushed" do
       browser.goto
       browser.execute(%(window.history.pushState({foo: "bar"}, "title", "bar2.html");))
-      expect(browser.current_url).to eq(base_url("/bar2.html"))
+      expect(browser.window_url).to eq(base_url("/bar2.html"))
       expect { browser.back }.not_to raise_error
-      expect(browser.current_url).to eq(base_url("/"))
+      expect(browser.window_url).to eq(base_url("/"))
     end
 
     it "can go forward when history state is used" do
       browser.goto
       browser.execute(%(window.history.pushState({foo: "bar"}, "title", "bar2.html");))
-      expect(browser.current_url).to eq(base_url("/bar2.html"))
+      expect(browser.window_url).to eq(base_url("/bar2.html"))
       # don't use #back here to isolate the test
       browser.execute("window.history.go(-1);")
-      expect(browser.current_url).to eq(base_url("/"))
+      expect(browser.window_url).to eq(base_url("/"))
       expect { browser.forward }.not_to raise_error
-      expect(browser.current_url).to eq(base_url("/bar2.html"))
+      expect(browser.window_url).to eq(base_url("/bar2.html"))
     end
 
     if Ferrum.mri? && !Ferrum.windows?
@@ -675,7 +675,7 @@ module Ferrum
             browser.goto("http://example.com")
             puts "Please type enter"
             sleep 1
-            browser.current_url
+            browser.window_url
           RUBY
         end
 
