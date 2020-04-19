@@ -175,6 +175,7 @@ Ferrum::Browser.new(options)
   * `:ws_max_receive_size` (Integer) - How big messages to accept from Chrome
       over the web socket, in bytes. Defaults to 64MB. Incoming messages larger
       than this will cause a `Ferrum::DeadBrowserError`.
+  * `:save_path` (String) - Configure where downloaded files are saved.
 
 
 ## Navigation
